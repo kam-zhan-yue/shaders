@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://dvwy0axulum5w"
+path="res://.godot/imported/post_process_grayscale.glsl-808b17f61b0399cc4ff676a9ec0d7e28.res"
+
+[deps]
+
+source_file="res://scripts/post_process_grayscale.glsl"
+dest_files=["res://.godot/imported/post_process_grayscale.glsl-808b17f61b0399cc4ff676a9ec0d7e28.res"]
+
+[params]
+

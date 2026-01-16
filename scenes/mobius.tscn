@@ -1,6 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://cmch3x32piva7"]
+[gd_scene load_steps=14 format=3 uid="uid://cmch3x32piva7"]
 
 [ext_resource type="Script" uid="uid://cmchuysbweun1" path="res://scripts/mobius.gd" id="1_5l1mq"]
+[ext_resource type="Script" uid="uid://ddhk3fb71vlho" path="res://scripts/post_process_grayscale.gd" id="2_5inxf"]
+[ext_resource type="Script" uid="uid://dberyr1t6j3o" path="res://scripts/post_process_shader.gd" id="3_sov7o"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_5l1mq"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -14,6 +16,31 @@ background_mode = 2
 sky = SubResource("Sky_5inxf")
 tonemap_mode = 2
 glow_enabled = true
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_sov7o"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = false
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = false
+script = ExtResource("2_5inxf")
+metadata/_custom_type_script = "uid://ddhk3fb71vlho"
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_omaae"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = false
+script = ExtResource("3_sov7o")
+shader_code = "float gray = color.r * 0.2125 + color.g * 0.7154 + color.b * 0.0721;
+color.rgb = vec3(gray);"
+metadata/_custom_type_script = "uid://dberyr1t6j3o"
+
+[sub_resource type="Compositor" id="Compositor_omaae"]
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_sov7o"), SubResource("CompositorEffect_omaae")])
 
 [sub_resource type="BoxMesh" id="BoxMesh_5l1mq"]
 size = Vector3(1, 3, 6)
@@ -31,6 +58,7 @@ script = ExtResource("1_5l1mq")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_sov7o")
+compositor = SubResource("Compositor_omaae")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
