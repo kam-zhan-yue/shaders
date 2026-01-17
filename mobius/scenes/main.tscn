@@ -52,9 +52,9 @@ transform = Transform3D(-0.99956495, 0, -0.029491764, 0, 1, 0, 0.029491764, 0, -
 size = Vector3(7, 3, 0.5)
 
 [node name="CSGSphere3D" type="CSGSphere3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5720286, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.31071466, 1.750796, -0.030255795)
 radial_segments = 20
 rings = 20
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.7486665, -0.33080178, 0.574516, 0, 0.8666095, 0.49898696, -0.66294676, -0.37357482, 0.6488015, 1.3335856, 2.2081394, 1.6616864)
+transform = Transform3D(0.7486665, -0.33080178, 0.574516, 0, 0.8666095, 0.49898696, -0.66294676, -0.37357482, 0.6488015, 1.5524861, 3.0449045, 1.8989153)
