@@ -8,15 +8,30 @@ var pipeline: RID
 var nearest_sampler: RID
 var parameter_storage_buffer: RID
 
+@export var depth_threshold := 0.0
+@export var depth_thickness := 0.0
+@export var depth_strength := 0.0
+@export var normal_threshold := 0.0
+@export var normal_thickness := 0.0
+@export var normal_strength := 0.0
+
 func _init() -> void:
 	effect_callback_type = EFFECT_CALLBACK_TYPE_POST_TRANSPARENT
 	rd = RenderingServer.get_rendering_device()
 	RenderingServer.call_on_render_thread(_initialise_compute)
 	var data := PackedFloat32Array()
-	data.resize(20)
+	data.resize(60)
 	data.fill(0)
 	var parameter_data := data.to_byte_array()
 	parameter_storage_buffer = rd.storage_buffer_create(parameter_data.size(), parameter_data)
+
+
+func get_sobel_parameters() -> PackedByteArray:
+	var depth_parameters := PackedFloat32Array([depth_threshold, depth_thickness, depth_strength])
+	var normal_parameters := PackedFloat32Array([normal_threshold, normal_thickness, normal_strength])
+	var parameter_data := depth_parameters.to_byte_array()
+	parameter_data.append_array(normal_parameters.to_byte_array())
+	return parameter_data
 
 
 func _notification(what: int) -> void:
@@ -68,13 +83,20 @@ func _render_callback(p_effect_callback_type: EffectCallbackType, p_render_data:
 		for view in view_count:
 			var colour_buffer: RID = render_scene_buffers.get_color_layer(view)
 			var depth_buffer: RID = render_scene_buffers.get_depth_layer(view)
+			var normal_buffer: RID = render_scene_buffers.get_texture("forward_clustered", "normal_roughness")
 
 			var parameters := PackedFloat32Array([size.x, size.y, 0.0, 0.0])
 			var inv_proj_mat := scene_data.get_cam_projection().inverse()
 			var inv_proj_mat_array := PackedVector4Array([inv_proj_mat.x, inv_proj_mat.y, inv_proj_mat.z, inv_proj_mat.w])
 
+			var inv_view_mat := scene_data.get_view_projection(view).inverse()
+			var inv_view_mat_array := PackedVector4Array([inv_view_mat.x, inv_view_mat.y, inv_view_mat.z, inv_view_mat.w])
+			var sobel_parameters := get_sobel_parameters()
+
 			var parameter_data = parameters.to_byte_array()
 			parameter_data.append_array(inv_proj_mat_array.to_byte_array())
+			parameter_data.append_array(inv_view_mat_array.to_byte_array())
+			parameter_data.append_array(sobel_parameters)
 			rd.buffer_update(parameter_storage_buffer, 0, parameter_data.size(), parameter_data)
 
 			# Uniform Buffer
@@ -96,7 +118,14 @@ func _render_callback(p_effect_callback_type: EffectCallbackType, p_render_data:
 			uniform_depth.add_id(nearest_sampler)
 			uniform_depth.add_id(depth_buffer)
 
-			var uniform_set := UniformSetCacheRD.get_cache(shader, 0, [storage_buffer, uniform_colour, uniform_depth])
+			# Depth Buffer
+			var uniform_normal := RDUniform.new()
+			uniform_normal.uniform_type = RenderingDevice.UNIFORM_TYPE_SAMPLER_WITH_TEXTURE
+			uniform_normal.binding = 3
+			uniform_normal.add_id(nearest_sampler)
+			uniform_normal.add_id(normal_buffer)
+
+			var uniform_set := UniformSetCacheRD.get_cache(shader, 0, [storage_buffer, uniform_colour, uniform_depth, uniform_normal])
 
 			# Run the compute shader
 			var compute_list := rd.compute_list_begin()

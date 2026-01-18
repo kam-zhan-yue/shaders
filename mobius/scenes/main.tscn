@@ -1,6 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://dy7trjvekxa4"]
+[gd_scene load_steps=8 format=3 uid="uid://dy7trjvekxa4"]
 
-[ext_resource type="Script" uid="uid://4sl6auwmoqiu" path="res://shaders/mobius_shader.gd" id="1_o5qli"]
+[ext_resource type="CompositorEffect" uid="uid://cfmmb5epmogct" path="res://resources/mobius.tres" id="1_sugp2"]
+[ext_resource type="Script" uid="uid://ddcf06f71rslx" path="res://scripts/camera_controls.gd" id="2_0wfyh"]
+[ext_resource type="PackedScene" uid="uid://dkbn6gy3j8stn" path="res://assets/scene.glb" id="3_sugp2"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sgp6g"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -15,18 +17,8 @@ sky = SubResource("Sky_o5qli")
 tonemap_mode = 2
 glow_enabled = true
 
-[sub_resource type="CompositorEffect" id="CompositorEffect_0wfyh"]
-resource_local_to_scene = false
-resource_name = ""
-enabled = true
-effect_callback_type = 4
-needs_motion_vectors = false
-needs_normal_roughness = false
-script = ExtResource("1_o5qli")
-metadata/_custom_type_script = "uid://4sl6auwmoqiu"
-
 [sub_resource type="Compositor" id="Compositor_sugp2"]
-compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_0wfyh")])
+compositor_effects = Array[CompositorEffect]([ExtResource("1_sugp2")])
 
 [node name="Main" type="Node3D"]
 
@@ -58,3 +50,7 @@ rings = 20
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.7486665, -0.33080178, 0.574516, 0, 0.8666095, 0.49898696, -0.66294676, -0.37357482, 0.6488015, 1.5524861, 3.0449045, 1.8989153)
+script = ExtResource("2_0wfyh")
+
+[node name="scene" parent="." instance=ExtResource("3_sugp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.355419, 0, -1.6466513)
