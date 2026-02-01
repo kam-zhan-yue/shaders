@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://bxbbfnf73m8nl"
+path="res://.godot/imported/edge_shader.glsl-b5544df8a4083e9d8b4ca7bca3afe689.res"
+
+[deps]
+
+source_file="res://pixel/edge_shader/edge_shader.glsl"
+dest_files=["res://.godot/imported/edge_shader.glsl-b5544df8a4083e9d8b4ca7bca3afe689.res"]
+
+[params]
+

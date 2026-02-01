@@ -35,8 +35,8 @@ void main() {
   vec4 gray = vec4(vec3(grayscale), 1.0);
   imageStore(colour_buffer, uv, gray);
 
-  float depth = texture(depth_buffer, uv_normalised).r;
-  imageStore(colour_buffer, uv, vec4(vec3(depth), 1.0));
+  // float depth = texture(depth_buffer, uv_normalised).r;
+  // imageStore(colour_buffer, uv, vec4(vec3(depth), 1.0));
 
   // vec4 normal = texture(normal_buffer, uv_normalised);
   // normal = normal_roughness_compatibility(normal);

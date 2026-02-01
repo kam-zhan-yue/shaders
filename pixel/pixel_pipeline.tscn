@@ -1,8 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://rg7cd0qa4mct"]
+[gd_scene format=3 uid="uid://rg7cd0qa4mct"]
 
 [ext_resource type="Script" uid="uid://2hvow42v6esc" path="res://pixel/pixel.gd" id="1_8ygkq"]
 [ext_resource type="Shader" uid="uid://cw52pg1r2wiy" path="res://shared/sky_shader/sky.gdshader" id="2_lgpru"]
-[ext_resource type="Script" uid="uid://dwr5tyiidnwqr" path="res://pixel/pixel_shader.gd" id="3_lgpru"]
+[ext_resource type="Compositor" uid="uid://wxxofaqkkdug" path="res://pixel/resources/pixel_compositor.tres" id="3_lgpru"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ioodr"]
 shader = ExtResource("2_lgpru")
@@ -18,26 +18,13 @@ sky = SubResource("Sky_cuxjp")
 tonemap_mode = 2
 glow_enabled = true
 
-[sub_resource type="CompositorEffect" id="CompositorEffect_ew2yk"]
-resource_local_to_scene = false
-resource_name = ""
-enabled = true
-effect_callback_type = 4
-needs_motion_vectors = false
-needs_normal_roughness = true
-script = ExtResource("3_lgpru")
-metadata/_custom_type_script = "uid://dwr5tyiidnwqr"
-
-[sub_resource type="Compositor" id="Compositor_5b67m"]
-compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_ew2yk")])
-
-[node name="PixelPipeline" type="Node3D"]
+[node name="PixelPipeline" type="Node3D" unique_id=1521322793]
 script = ExtResource("1_8ygkq")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=382571241]
 environment = SubResource("Environment_deyq5")
-compositor = SubResource("Compositor_5b67m")
+compositor = ExtResource("3_lgpru")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1313813467]
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
 shadow_enabled = true

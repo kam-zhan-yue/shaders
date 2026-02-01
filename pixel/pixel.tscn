@@ -1,14 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://bqawddhkt2i1i"]
+[gd_scene format=3 uid="uid://bqawddhkt2i1i"]
 
 [ext_resource type="PackedScene" uid="uid://dkbn6gy3j8stn" path="res://shared/assets/island.glb" id="1_vcrce"]
 [ext_resource type="PackedScene" uid="uid://cdr7y3ivt1pgl" path="res://shared/camera/camera_controls.tscn" id="2_50e25"]
 [ext_resource type="PackedScene" uid="uid://rg7cd0qa4mct" path="res://pixel/pixel_pipeline.tscn" id="3_50e25"]
 
-[node name="Pixel" type="Node3D"]
+[node name="Pixel" type="Node3D" unique_id=1674035330]
 
-[node name="Scene" parent="." instance=ExtResource("1_vcrce")]
+[node name="Scene" parent="." unique_id=1247617075 instance=ExtResource("1_vcrce")]
 
-[node name="CameraControls" parent="." instance=ExtResource("2_50e25")]
+[node name="CameraControls" parent="." unique_id=1914393932 instance=ExtResource("2_50e25")]
 transform = Transform3D(1, 0, 0, 0, 0.9604542, 0.27843797, 0, -0.27843797, 0.9604542, 0, 3.634019, 8.681172)
 
-[node name="PixelPipeline" parent="." instance=ExtResource("3_50e25")]
+[node name="PixelPipeline" parent="." unique_id=985035167 instance=ExtResource("3_50e25")]

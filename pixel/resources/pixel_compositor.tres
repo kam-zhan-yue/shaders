@@ -1,0 +1,17 @@
+[gd_resource type="Compositor" format=3 uid="uid://wxxofaqkkdug"]
+
+[ext_resource type="Script" uid="uid://dwr5tyiidnwqr" path="res://pixel/pixel_shader/pixel_shader.gd" id="1_vw48a"]
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_ew2yk"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = true
+script = ExtResource("1_vw48a")
+pixel_size = 200
+metadata/_custom_type_script = "uid://dwr5tyiidnwqr"
+
+[resource]
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_ew2yk")])
