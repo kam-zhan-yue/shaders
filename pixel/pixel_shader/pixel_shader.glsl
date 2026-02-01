@@ -10,6 +10,7 @@ layout (set = 0, binding = 0, std430) readonly buffer Params {
 } params;
 
 layout (rgba16f, set = 0, binding = 1) uniform image2D colour_buffer;
+layout (set = 0, binding = 2) uniform sampler2D fragment_buffer;
 
 void main() {
   ivec2 uv = ivec2(gl_GlobalInvocationID.xy);
@@ -18,13 +19,10 @@ void main() {
   if (uv.x >= size.x || uv.y >= size.y) return;
 
   float pixel_size = params.pixel_size;
+
   vec2 pixel = uv_normalised;
   pixel.x -= mod(pixel.x, 1.0 / pixel_size);
   pixel.y -= mod(pixel.y, 1.0 / pixel_size);
-
-
-  vec2 final_vec2 = pixel * size;
-  ivec2 final = ivec2(int(final_vec2.x), int(final_vec2.y));
-  vec4 colour = imageLoad(colour_buffer, final);
-  imageStore(colour_buffer, uv, colour);
+  vec3 colour = texture(fragment_buffer, pixel).rgb;
+  imageStore(colour_buffer, uv, vec4(colour, 1.0));
 }

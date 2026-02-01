@@ -8,6 +8,7 @@ var rd: RenderingDevice
 var shader: RID
 var pipeline: RID
 var parameter_rid: RID
+var sampler_rid: RID
 
 func _init() -> void:
 	effect_callback_type = EFFECT_CALLBACK_TYPE_POST_TRANSPARENT
@@ -43,6 +44,8 @@ func _notification(what: int) -> void:
 			rd.free_rid(shader)
 		if parameter_rid.is_valid():
 			rd.free_rid(parameter_rid)
+		if sampler_rid.is_valid():
+			rd.free_rid(sampler_rid)
 
 
 func get_uniform(rids: Array[RID], type: RenderingDevice.UniformType, binding: int) -> RDUniform:
@@ -72,6 +75,13 @@ func _render_callback(p_effect_callback_type: EffectCallbackType, p_render_data:
 	var y_groups := (size.y - 1) / 8 + 1
 	var z_groups := 1
 
+	# Make sure we have a sampler
+	if not sampler_rid.is_valid():
+		var sampler_state := RDSamplerState.new()
+		sampler_state.min_filter = RenderingDevice.SAMPLER_FILTER_NEAREST
+		sampler_state.mag_filter = RenderingDevice.SAMPLER_FILTER_NEAREST
+		sampler_rid = rd.sampler_create(sampler_state)
+
 	var view_count: int = render_scene_buffers.get_view_count()
 	for view in view_count:
 		var colour_buffer: RID = render_scene_buffers.get_color_layer(view)
@@ -94,9 +104,15 @@ func _render_callback(p_effect_callback_type: EffectCallbackType, p_render_data:
 			RenderingDevice.UNIFORM_TYPE_IMAGE,
 			1,
 		)
+		# Colour Image
+		var uniform_fragment := get_uniform(
+			[sampler_rid, colour_buffer],
+			RenderingDevice.UNIFORM_TYPE_SAMPLER_WITH_TEXTURE,
+			2,
+		)
 		var uniform_set := UniformSetCacheRD.get_cache(
 			shader, 0, 
-			[storage_buffer, uniform_colour]
+			[storage_buffer, uniform_colour, uniform_fragment]
 		)
 
 		# Run the compute shader
