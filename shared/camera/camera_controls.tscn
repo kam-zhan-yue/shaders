@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://cdr7y3ivt1pgl"]
+
+[ext_resource type="Script" uid="uid://ddcf06f71rslx" path="res://shared/camera/camera_controls.gd" id="1_qpbco"]
+
+[node name="CameraControls" type="Camera3D"]
+transform = Transform3D(0.7486665, -0.33080178, 0.574516, 0, 0.8666095, 0.49898696, -0.66294676, -0.37357482, 0.6488015, 0, 0, 0)
+script = ExtResource("1_qpbco")

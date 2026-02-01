@@ -1,0 +1,42 @@
+[gd_resource type="Compositor" load_steps=8 format=3 uid="uid://xbv1lvuy6rwh"]
+
+[ext_resource type="Script" uid="uid://blqaht8vdk77h" path="res://mobius/normal_shader/normal_shader.gd" id="1_gm0l7"]
+[ext_resource type="Texture2D" uid="uid://cyavq7br11fnh" path="res://mobius/crosshatch.png" id="2_j8nnw"]
+[ext_resource type="Script" uid="uid://4sl6auwmoqiu" path="res://mobius/mobius_shader/mobius_shader.gd" id="3_nkh8c"]
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_bide5"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = true
+script = ExtResource("1_gm0l7")
+metadata/_custom_type_script = "uid://blqaht8vdk77h"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ak1va"]
+noise_type = 3
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_h8hqs"]
+generate_mipmaps = false
+noise = SubResource("FastNoiseLite_ak1va")
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_yempi"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = false
+script = ExtResource("3_nkh8c")
+noise_texture = SubResource("NoiseTexture2D_h8hqs")
+crosshatch = ExtResource("2_j8nnw")
+shadow_tiling = Vector2(20, 20)
+shadow_horizontal = 0.7
+shadow_vertical = 0.8
+shadow_diagonal = 0.9
+outline_colour = Color(0, 0, 0, 1)
+metadata/_custom_type_script = "uid://4sl6auwmoqiu"
+
+[resource]
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_bide5"), SubResource("CompositorEffect_yempi")])

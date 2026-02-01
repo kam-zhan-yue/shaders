@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://cvcxixsjo1y5a"
+path="res://.godot/imported/normal_shader.glsl-2f2b2707e526eb14e1ecd9ae038d1577.res"
+
+[deps]
+
+source_file="res://mobius/normal_shader/normal_shader.glsl"
+dest_files=["res://.godot/imported/normal_shader.glsl-2f2b2707e526eb14e1ecd9ae038d1577.res"]
+
+[params]
+

@@ -1,0 +1,17 @@
+[gd_resource type="Environment" load_steps=4 format=3 uid="uid://cd5d7rne48t0y"]
+
+[ext_resource type="Shader" uid="uid://cw52pg1r2wiy" path="res://mobius/sky_shader/sky.gdshader" id="1_afo1j"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c5j0r"]
+shader = ExtResource("1_afo1j")
+shader_parameter/sky_top = Color(1, 0.9228389, 0.98758084, 1)
+shader_parameter/sky_horizon = Color(0.98481745, 0.7668253, 0.9726626, 1)
+
+[sub_resource type="Sky" id="Sky_o5qli"]
+sky_material = SubResource("ShaderMaterial_c5j0r")
+
+[resource]
+background_mode = 2
+sky = SubResource("Sky_o5qli")
+tonemap_mode = 2
+glow_enabled = true
