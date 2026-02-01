@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://dkbn6gy3j8stn"
-path="res://.godot/imported/scene.glb-a9a09722ba7ef616b4695170e92bd87e.scn"
+path="res://.godot/imported/island.glb-ce235c979098023956e35556d444e74a.scn"
 
 [deps]
 
-source_file="res://assets/scene.glb"
-dest_files=["res://.godot/imported/scene.glb-a9a09722ba7ef616b4695170e92bd87e.scn"]
+source_file="res://shared/assets/island.glb"
+dest_files=["res://.godot/imported/island.glb-ce235c979098023956e35556d444e74a.scn"]
 
 [params]
 

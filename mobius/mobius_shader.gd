@@ -49,7 +49,7 @@ func _initialise_compute() -> void:
 	if not rd:
 		return
 
-	var shader_file := load("res://shaders/mobius_shader.glsl")
+	var shader_file := load("res://mobius/mobius_shader.glsl")
 	var shader_spirv: RDShaderSPIRV = shader_file.get_spirv()
 
 	shader = rd.shader_create_from_spirv(shader_spirv)

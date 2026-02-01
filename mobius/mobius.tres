@@ -1,6 +1,6 @@
 [gd_resource type="CompositorEffect" script_class="MobiusShader" load_steps=2 format=3 uid="uid://cfmmb5epmogct"]
 
-[ext_resource type="Script" uid="uid://4sl6auwmoqiu" path="res://shaders/mobius_shader.gd" id="1_recbg"]
+[ext_resource type="Script" uid="uid://4sl6auwmoqiu" path="res://mobius/mobius_shader.gd" id="1_recbg"]
 
 [resource]
 resource_local_to_scene = false
