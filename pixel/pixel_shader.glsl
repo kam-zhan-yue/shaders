@@ -19,7 +19,8 @@ vec4 normal_roughness_compatibility(vec4 p_normal_roughness) {
 		roughness = 1.0 - roughness;
 	}
 	roughness /= (127.0 / 255.0);
-	return vec4(normalize(p_normal_roughness.xyz * 2.0 - 1.0) * 0.5 + 0.5, roughness);
+	vec4 compatibility = vec4(normalize(p_normal_roughness.xyz * 2.0 - 1.0) * 0.5 + 0.5, roughness);
+  return normalize(compatibility * 2.0 - 1.0);
 }
 
 void main() {
@@ -37,8 +38,7 @@ void main() {
   float depth = texture(depth_buffer, uv_normalised).r;
   imageStore(colour_buffer, uv, vec4(vec3(depth), 1.0));
 
-  vec4 normal = texture(normal_buffer, uv_normalised);
-  normal = normal_roughness_compatibility(normal);
-  normal = normalize(normal * 2.0 - 1.0);
-  imageStore(colour_buffer, uv, normal);
+  // vec4 normal = texture(normal_buffer, uv_normalised);
+  // normal = normal_roughness_compatibility(normal);
+  // imageStore(colour_buffer, uv, normal);
 }
