@@ -1,8 +1,8 @@
 [gd_resource type="Compositor" load_steps=8 format=3 uid="uid://xbv1lvuy6rwh"]
 
-[ext_resource type="Script" uid="uid://blqaht8vdk77h" path="res://mobius/normal_shader/normal_shader.gd" id="1_gm0l7"]
-[ext_resource type="Texture2D" uid="uid://cyavq7br11fnh" path="res://mobius/crosshatch.png" id="2_j8nnw"]
-[ext_resource type="Script" uid="uid://4sl6auwmoqiu" path="res://mobius/mobius_shader/mobius_shader.gd" id="3_nkh8c"]
+[ext_resource type="Script" uid="uid://blqaht8vdk77h" path="res://mobius/normal_shader/normal_shader.gd" id="1_puf8g"]
+[ext_resource type="Texture2D" uid="uid://cyavq7br11fnh" path="res://mobius/crosshatch.png" id="2_8cvvd"]
+[ext_resource type="Script" uid="uid://4sl6auwmoqiu" path="res://mobius/mobius_shader/mobius_shader.gd" id="3_jq8ae"]
 
 [sub_resource type="CompositorEffect" id="CompositorEffect_bide5"]
 resource_local_to_scene = false
@@ -11,7 +11,7 @@ enabled = true
 effect_callback_type = 4
 needs_motion_vectors = false
 needs_normal_roughness = true
-script = ExtResource("1_gm0l7")
+script = ExtResource("1_puf8g")
 metadata/_custom_type_script = "uid://blqaht8vdk77h"
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_ak1va"]
@@ -28,9 +28,9 @@ enabled = true
 effect_callback_type = 4
 needs_motion_vectors = false
 needs_normal_roughness = false
-script = ExtResource("3_nkh8c")
+script = ExtResource("3_jq8ae")
 noise_texture = SubResource("NoiseTexture2D_h8hqs")
-crosshatch = ExtResource("2_j8nnw")
+crosshatch = ExtResource("2_8cvvd")
 shadow_tiling = Vector2(20, 20)
 shadow_horizontal = 0.7
 shadow_vertical = 0.8

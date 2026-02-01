@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://euia0h4x7d6y"]
+
+[ext_resource type="Script" uid="uid://b24feisjoqkx7" path="res://mobius/mobius.gd" id="1_r3gun"]
+[ext_resource type="Environment" uid="uid://cd5d7rne48t0y" path="res://mobius/resources/mobius_environment.tres" id="2_hhwyw"]
+[ext_resource type="Compositor" uid="uid://xbv1lvuy6rwh" path="res://mobius/resources/mobius_compositor.tres" id="2_r3gun"]
+
+[node name="Mobius" type="Node3D" node_paths=PackedStringArray("environment", "directional_light")]
+script = ExtResource("1_r3gun")
+environment = NodePath("WorldEnvironment")
+directional_light = NodePath("DirectionalLight3D")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("2_hhwyw")
+compositor = ExtResource("2_r3gun")
