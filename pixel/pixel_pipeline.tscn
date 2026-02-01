@@ -18,8 +18,9 @@ sky = SubResource("Sky_cuxjp")
 tonemap_mode = 2
 glow_enabled = true
 
-[node name="PixelPipeline" type="Node3D" unique_id=1521322793]
+[node name="PixelPipeline" type="Node3D" unique_id=1521322793 node_paths=PackedStringArray("environment")]
 script = ExtResource("1_8ygkq")
+environment = NodePath("WorldEnvironment")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=382571241]
 environment = SubResource("Environment_deyq5")

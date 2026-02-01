@@ -9,8 +9,9 @@ layout (set = 0, binding = 0, std430) readonly buffer Params {
 } params;
 
 layout (rgba16f, set = 0, binding = 1) uniform image2D colour_buffer;
-layout (set = 0, binding = 2) uniform sampler2D depth_buffer;
-layout (set = 0, binding = 3) uniform sampler2D normal_buffer;
+layout (set = 0, binding = 2) uniform sampler2D screen_buffer;
+layout (set = 0, binding = 3) uniform sampler2D depth_buffer;
+layout (set = 0, binding = 4) uniform sampler2D normal_buffer;
 
 // Taken from https://github.com/godotengine/godot-docs/issues/9591
 vec4 normal_roughness_compatibility(vec4 p_normal_roughness) {
@@ -30,7 +31,7 @@ void main() {
   vec2 texel_size = 1.0 / size.xy;
   if (uv.x >= size.x || uv.y >= size.y) return;
   
-  vec4 colour = imageLoad(colour_buffer, uv);
+  vec4 colour = texture(screen_buffer, uv_normalised);
   float grayscale = (colour.x + colour.y + colour.z) / 3;
   vec4 gray = vec4(vec3(grayscale), 1.0);
   imageStore(colour_buffer, uv, gray);

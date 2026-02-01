@@ -1,6 +1,7 @@
 [gd_resource type="Compositor" format=3 uid="uid://wxxofaqkkdug"]
 
 [ext_resource type="Script" uid="uid://dwr5tyiidnwqr" path="res://pixel/pixel_shader/pixel_shader.gd" id="1_vw48a"]
+[ext_resource type="Script" uid="uid://bjj81jdodiiqb" path="res://pixel/edge_shader/edge_shader.gd" id="2_76n7s"]
 
 [sub_resource type="CompositorEffect" id="CompositorEffect_ew2yk"]
 resource_local_to_scene = false
@@ -13,5 +14,15 @@ script = ExtResource("1_vw48a")
 pixel_size = 100
 metadata/_custom_type_script = "uid://dwr5tyiidnwqr"
 
+[sub_resource type="CompositorEffect" id="CompositorEffect_xrlf2"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = true
+script = ExtResource("2_76n7s")
+metadata/_custom_type_script = "uid://bjj81jdodiiqb"
+
 [resource]
-compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_ew2yk")])
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_ew2yk"), SubResource("CompositorEffect_xrlf2")])

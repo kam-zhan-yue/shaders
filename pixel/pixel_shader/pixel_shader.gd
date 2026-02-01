@@ -4,6 +4,8 @@ extends CompositorEffect
 
 @export var pixel_size := 16
 
+var screen_texture: RID
+
 var rd: RenderingDevice
 var shader: RID
 var pipeline: RID
@@ -61,6 +63,7 @@ func _render_callback(p_effect_callback_type: EffectCallbackType, p_render_data:
 	if not rd: return
 	if p_effect_callback_type != EFFECT_CALLBACK_TYPE_POST_TRANSPARENT: return
 	if not pipeline.is_valid(): return
+	if not screen_texture.is_valid(): return
 
 	var render_scene_buffers = p_render_data.get_render_scene_buffers()
 	var scene_data = p_render_data.get_render_scene_data()
@@ -86,7 +89,7 @@ func _render_callback(p_effect_callback_type: EffectCallbackType, p_render_data:
 	for view in view_count:
 		var colour_buffer: RID = render_scene_buffers.get_color_layer(view)
 
-		var parameters := PackedFloat32Array([size.x, size.y, 0.0, 0.0])
+		var parameters := PackedFloat32Array([size.x, size.y, pixel_size, 0.0])
 		var extra_parameters := PackedFloat32Array([pixel_size, 0.0, 0.0, 0.0])
 		var parameter_data = parameters.to_byte_array()
 		parameter_data.append_array(extra_parameters.to_byte_array())
@@ -100,7 +103,7 @@ func _render_callback(p_effect_callback_type: EffectCallbackType, p_render_data:
 		)
 		# Colour Image
 		var uniform_colour := get_uniform(
-			[colour_buffer],
+			[screen_texture],
 			RenderingDevice.UNIFORM_TYPE_IMAGE,
 			1,
 		)
@@ -121,6 +124,3 @@ func _render_callback(p_effect_callback_type: EffectCallbackType, p_render_data:
 		rd.compute_list_bind_uniform_set(compute_list, uniform_set, 0)
 		rd.compute_list_dispatch(compute_list, x_groups, y_groups, z_groups)
 		rd.compute_list_end()
-
-
-

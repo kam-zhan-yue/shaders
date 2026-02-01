@@ -23,6 +23,6 @@ void main() {
   vec2 pixel = uv_normalised;
   pixel.x -= mod(pixel.x, 1.0 / pixel_size);
   pixel.y -= mod(pixel.y, 1.0 / pixel_size);
-  vec3 colour = texture(fragment_buffer, pixel).rgb;
-  imageStore(colour_buffer, uv, vec4(colour, 1.0));
+  vec4 colour = texture(fragment_buffer, pixel);
+  imageStore(colour_buffer, uv, colour);
 }
