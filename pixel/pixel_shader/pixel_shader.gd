@@ -90,9 +90,7 @@ func _render_callback(p_effect_callback_type: EffectCallbackType, p_render_data:
 		var colour_buffer: RID = render_scene_buffers.get_color_layer(view)
 
 		var parameters := PackedFloat32Array([size.x, size.y, pixel_size, 0.0])
-		var extra_parameters := PackedFloat32Array([pixel_size, 0.0, 0.0, 0.0])
 		var parameter_data = parameters.to_byte_array()
-		parameter_data.append_array(extra_parameters.to_byte_array())
 		rd.buffer_update(parameter_rid, 0, parameter_data.size(), parameter_data)
 
 		# Uniform Buffer

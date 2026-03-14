@@ -21,9 +21,9 @@ func _init() -> void:
 
 func get_empty_data() -> PackedByteArray:
 	# size + reserved: 4 floats
-	# inv view matrix: 12 floats
+	# inv view matrix: 16 floats
 	var matrices := PackedFloat32Array()
-	matrices.resize(16)
+	matrices.resize(20)
 	matrices.fill(0)
 	var parameter_data = matrices.to_byte_array()
 	return parameter_data
@@ -91,7 +91,7 @@ func _render_callback(p_effect_callback_type: EffectCallbackType, p_render_data:
 
 		var parameters := PackedFloat32Array([size.x, size.y, 0.0, 0.0])
 		var inv_proj_mat := scene_data.get_cam_projection().inverse()
-		var inv_proj_mat_arr := PackedFloat32Array([inv_proj_mat.x, inv_proj_mat.y, inv_proj_mat.z, inv_proj_mat.w])
+		var inv_proj_mat_arr := PackedVector4Array([inv_proj_mat.x, inv_proj_mat.y, inv_proj_mat.z, inv_proj_mat.w])
 		var parameter_data = parameters.to_byte_array()
 		parameter_data.append_array(inv_proj_mat_arr.to_byte_array())
 		rd.buffer_update(parameter_rid, 0, parameter_data.size(), parameter_data)
