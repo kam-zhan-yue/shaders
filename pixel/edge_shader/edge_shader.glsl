@@ -35,6 +35,12 @@ float linearise_depth(vec2 uv) {
   return -view.z;
 }
 
+vec4 get_normal(vec2 uv) {
+  vec4 normal = texture(normal_buffer, uv);
+  normal = normal * 2.0 - 1.0;
+  return normal;
+}
+
 void main() {
   ivec2 uv = ivec2(gl_GlobalInvocationID.xy);
   vec2 size = vec2(params.raster_size);
@@ -60,6 +66,16 @@ void main() {
     float depth_offset = linearise_depth(uv_offsets[i]);
     depth_difference += clamp(depth_offset - depth, 0.0, 1.0);
   }
+  depth_difference = smoothstep(0.25, 0.3, depth_difference);
+
+  vec3 normal = normal_roughness_compatibility(get_normal(uv_normalised + offset)).rgb;
+  float normal_difference = 0.0;
+  for (int i = 0; i < uv_offsets.length(); ++i) {
+    vec3 normal_offset = normal_roughness_compatibility(get_normal(uv_offsets[i])).rgb;
+    normal_difference += 1.0 - dot(normal, normal_offset);
+  }
+  normal_difference = smoothstep(0.2, 0.2, normal_difference);
+
   // float depth = texture(depth_buffer, uv_normalised).r;
   imageStore(colour_buffer, uv, vec4(vec3(depth_difference), 1.0));
 
