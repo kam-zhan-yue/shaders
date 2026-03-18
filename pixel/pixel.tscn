@@ -6,10 +6,23 @@
 
 [node name="Pixel" type="Node3D" unique_id=1674035330]
 
-[node name="Scene" parent="." unique_id=1247617075 instance=ExtResource("1_vcrce")]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=620581066]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+stretch_shrink = 6
 
-[node name="CameraControls" parent="." unique_id=1914393932 instance=ExtResource("2_50e25")]
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=2067676838]
+size = Vector2i(320, 180)
+
+[node name="Scene" parent="SubViewportContainer/SubViewport" unique_id=1247617075 instance=ExtResource("1_vcrce")]
+
+[node name="CameraControls" parent="SubViewportContainer/SubViewport" unique_id=1914393932 instance=ExtResource("2_50e25")]
 transform = Transform3D(1, 0, 0, 0, 0.9604542, 0.27843797, 0, -0.27843797, 0.9604542, 0, 3.634019, 8.681172)
 
-[node name="PixelPipeline" parent="." unique_id=985035167 instance=ExtResource("3_50e25")]
+[node name="PixelPipeline" parent="SubViewportContainer/SubViewport" unique_id=985035167 instance=ExtResource("3_50e25")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.079193115, 0)

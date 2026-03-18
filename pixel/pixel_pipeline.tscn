@@ -1,6 +1,5 @@
 [gd_scene format=3 uid="uid://rg7cd0qa4mct"]
 
-[ext_resource type="Script" uid="uid://2hvow42v6esc" path="res://pixel/pixel.gd" id="1_8ygkq"]
 [ext_resource type="Shader" uid="uid://cw52pg1r2wiy" path="res://shared/sky_shader/sky.gdshader" id="2_lgpru"]
 [ext_resource type="Compositor" uid="uid://wxxofaqkkdug" path="res://pixel/resources/pixel_compositor.tres" id="3_lgpru"]
 
@@ -18,9 +17,7 @@ sky = SubResource("Sky_cuxjp")
 tonemap_mode = 2
 glow_enabled = true
 
-[node name="PixelPipeline" type="Node3D" unique_id=1521322793 node_paths=PackedStringArray("environment")]
-script = ExtResource("1_8ygkq")
-environment = NodePath("WorldEnvironment")
+[node name="PixelPipeline" type="Node3D" unique_id=1521322793]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=382571241]
 environment = SubResource("Environment_deyq5")

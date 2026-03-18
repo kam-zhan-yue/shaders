@@ -7,7 +7,6 @@ var shader: RID
 var pipeline: RID
 var parameter_rid: RID
 var sampler_rid: RID
-var screen_texture: RID
 
 func _init() -> void:
 	effect_callback_type = EFFECT_CALLBACK_TYPE_POST_TRANSPARENT
@@ -59,7 +58,6 @@ func _render_callback(p_effect_callback_type: EffectCallbackType, p_render_data:
 	if not rd: return
 	if p_effect_callback_type != EFFECT_CALLBACK_TYPE_POST_TRANSPARENT: return
 	if not pipeline.is_valid(): return
-	if not screen_texture.is_valid(): return
 
 	var render_scene_buffers = p_render_data.get_render_scene_buffers()
 	var scene_data = p_render_data.get_render_scene_data()
@@ -103,31 +101,25 @@ func _render_callback(p_effect_callback_type: EffectCallbackType, p_render_data:
 		)
 		# Input the Colour Buffer
 		var uniform_input := get_uniform(
-			[sampler_rid, colour_buffer],
-			RenderingDevice.UNIFORM_TYPE_SAMPLER_WITH_TEXTURE,
-			1,
-		)
-		# Output the Screen Texture
-		var uniform_output := get_uniform(
-			[screen_texture],
+			[colour_buffer],
 			RenderingDevice.UNIFORM_TYPE_IMAGE,
-			2,
+			1,
 		)
 		# Depth Buffer
 		var uniform_depth := get_uniform(
 			[sampler_rid, depth_buffer],
 			RenderingDevice.UNIFORM_TYPE_SAMPLER_WITH_TEXTURE,
-			3,
+			2,
 		)
 		# Normal Buffer
 		var uniform_normal := get_uniform(
 			[sampler_rid, normal_buffer],
 			RenderingDevice.UNIFORM_TYPE_SAMPLER_WITH_TEXTURE,
-			4,
+			3,
 		)
 		var uniform_set := UniformSetCacheRD.get_cache(
 			shader, 0, 
-			[storage_buffer, uniform_input, uniform_output, uniform_depth, uniform_normal]
+			[storage_buffer, uniform_input, uniform_depth, uniform_normal]
 		)
 
 		# Run the compute shader
