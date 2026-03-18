@@ -17,16 +17,6 @@ const vec2 OFFSET = vec2(0.0001);
 const float line_highlight = 0.1;
 const float line_shadow = 0.55;
 
-// Taken from https://github.com/godotengine/godot-docs/issues/9591
-vec4 normal_roughness_compatibility(vec4 p_normal_roughness) {
-	float roughness = p_normal_roughness.w;
-	if (roughness > 0.5) {
-		roughness = 1.0 - roughness;
-	}
-	roughness /= (127.0 / 255.0);
-	vec4 compatibility = vec4(normalize(p_normal_roughness.xyz * 2.0 - 1.0) * 0.5 + 0.5, roughness);
-  return normalize(compatibility * 2.0 - 1.0);
-}
 
 float linearise_depth(vec2 uv) {
   float depth = texture(depth_buffer, uv).r;
@@ -39,6 +29,17 @@ float linearise_depth(vec2 uv) {
 vec4 get_normal(vec2 uv) {
   vec4 normal = texture(normal_buffer, uv);
   return normal;
+}
+
+// Taken from https://github.com/godotengine/godot-docs/issues/9591
+vec4 normal_roughness_compatibility(vec4 p_normal_roughness) {
+	float roughness = p_normal_roughness.w;
+	if (roughness > 0.5) {
+		roughness = 1.0 - roughness;
+	}
+	roughness /= (127.0 / 255.0);
+	vec4 compatibility = vec4(normalize(p_normal_roughness.xyz * 2.0 - 1.0) * 0.5 + 0.5, roughness);
+  return compatibility * 2.0 - 1.0;
 }
 
 // Taken from https://github.com/KodyJKing/hello-threejs
@@ -80,12 +81,14 @@ void main() {
     vec3 normal_offset = normal_roughness_compatibility(get_normal(uv_offsets[i])).rgb;
     normal_difference += normal_edge_indicator(normal_edge_bias, normal, normal_offset, depth_difference);
   }
-  normal_difference = smoothstep(0.2, 0.5, normal_difference);
+  normal_difference = smoothstep(0.2, 0.2, normal_difference);
 
   // Colours and Outlines
   vec3 colour = imageLoad(colour_buffer, uv).rgb;
   vec3 outline = vec3(depth_difference);
-  vec3 inner_line = vec3(normal_difference) - outline;
-  vec4 colour_with_lines = vec4(colour.rgb + inner_line * 0.1 - colour.rgb * outline * 0.55, 1.0);
+  vec3 inner_line = clamp(vec3(normal_difference) - outline, vec3(0.0), vec3(1.0));
+  vec3 inline_colour = colour + inner_line * line_highlight;
+  vec3 outline_colour = colour * outline * line_shadow;
+  vec4 colour_with_lines = vec4(inline_colour - outline_colour, 1.0);
   imageStore(colour_buffer, uv, colour_with_lines);
 }
