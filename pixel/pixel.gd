@@ -41,7 +41,8 @@ func create_texture() -> void:
 	fmt.format = RenderingDevice.DATA_FORMAT_R32G32B32A32_SFLOAT
 	fmt.usage_bits = RenderingDevice.TEXTURE_USAGE_STORAGE_BIT | RenderingDevice.TEXTURE_USAGE_SAMPLING_BIT
 	texture_rid = rd.texture_create(fmt, RDTextureView.new())
-	var pixel_shader := environment.compositor.compositor_effects[0] as PixelShader
-	var edge_shader := environment.compositor.compositor_effects[1] as EdgeShader
+	var edge_shader := environment.compositor.compositor_effects[0] as EdgeShader
+	var pixel_shader := environment.compositor.compositor_effects[1] as PixelShader
 	pixel_shader.screen_texture = texture_rid
+	pixel_shader.raster_size = Vector2(fmt.width, fmt.height)
 	edge_shader.screen_texture = texture_rid

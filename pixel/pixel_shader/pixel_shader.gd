@@ -11,6 +11,7 @@ var shader: RID
 var pipeline: RID
 var parameter_rid: RID
 var sampler_rid: RID
+var raster_size: Vector2
 
 func _init() -> void:
 	effect_callback_type = EFFECT_CALLBACK_TYPE_POST_TRANSPARENT
@@ -99,21 +100,21 @@ func _render_callback(p_effect_callback_type: EffectCallbackType, p_render_data:
 			RenderingDevice.UNIFORM_TYPE_STORAGE_BUFFER,
 			0,
 		)
-		# Colour Image
-		var uniform_colour := get_uniform(
-			[screen_texture],
-			RenderingDevice.UNIFORM_TYPE_IMAGE,
+		# Input the Screen Texture
+		var uniform_input := get_uniform(
+			[sampler_rid, screen_texture],
+			RenderingDevice.UNIFORM_TYPE_SAMPLER_WITH_TEXTURE,
 			1,
 		)
-		# Colour Image
-		var uniform_fragment := get_uniform(
-			[sampler_rid, colour_buffer],
-			RenderingDevice.UNIFORM_TYPE_SAMPLER_WITH_TEXTURE,
+		# Output to the Colour Buffer
+		var uniform_output := get_uniform(
+			[colour_buffer],
+			RenderingDevice.UNIFORM_TYPE_IMAGE,
 			2,
 		)
 		var uniform_set := UniformSetCacheRD.get_cache(
 			shader, 0, 
-			[storage_buffer, uniform_colour, uniform_fragment]
+			[storage_buffer, uniform_input, uniform_output]
 		)
 
 		# Run the compute shader

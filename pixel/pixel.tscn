@@ -12,3 +12,4 @@
 transform = Transform3D(1, 0, 0, 0, 0.9604542, 0.27843797, 0, -0.27843797, 0.9604542, 0, 3.634019, 8.681172)
 
 [node name="PixelPipeline" parent="." unique_id=985035167 instance=ExtResource("3_50e25")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.079193115, 0)

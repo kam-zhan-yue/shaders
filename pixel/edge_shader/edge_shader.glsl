@@ -9,8 +9,8 @@ layout (set = 0, binding = 0, std430) readonly buffer Params {
   mat4 inv_proj_mat;
 } params;
 
-layout (rgba16f, set = 0, binding = 1) uniform image2D colour_buffer;
-layout (set = 0, binding = 2) uniform sampler2D screen_buffer;
+layout (set = 0, binding = 1) uniform sampler2D input_buffer;
+layout (rgba16f, set = 0, binding = 2) uniform image2D output_buffer;
 layout (set = 0, binding = 3) uniform sampler2D depth_buffer;
 layout (set = 0, binding = 4) uniform sampler2D normal_buffer;
 
@@ -54,12 +54,6 @@ void main() {
   uv_offsets[2] = uv_normalised + vec2(1.0, 0.0) * texel_size + offset;  // right
   uv_offsets[3] = uv_normalised + vec2(-1.0, 0.0) * texel_size + offset; // left
 
-  
-  // vec4 colour = texture(screen_buffer, uv_normalised);
-  // float grayscale = (colour.x + colour.y + colour.z) / 3;
-  // vec4 gray = vec4(vec3(grayscale), 1.0);
-  // imageStore(colour_buffer, uv, colour);
-
   float depth = linearise_depth(uv_normalised + offset);
   float depth_difference = 0.0;
   for (int i = 0; i < uv_offsets.length(); ++i) {
@@ -76,13 +70,6 @@ void main() {
   }
   normal_difference = smoothstep(0.2, 0.2, normal_difference);
 
-  // float depth = texture(depth_buffer, uv_normalised).r;
-  imageStore(colour_buffer, uv, vec4(vec3(depth_difference), 1.0));
-
-  // float depth = texture(depth_buffer, uv_normalised).r;
-  // imageStore(colour_buffer, uv, vec4(vec3(depth), 1.0));
-
-  // vec4 normal = texture(normal_buffer, uv_normalised);
-  // normal = normal_roughness_compatibility(normal);
-  // imageStore(colour_buffer, uv, normal);
+  // imageStore(output_buffer, uv, vec4(vec3(depth_difference), 1.0));
+  imageStore(output_buffer, uv, texture(input_buffer, uv_normalised));
 }

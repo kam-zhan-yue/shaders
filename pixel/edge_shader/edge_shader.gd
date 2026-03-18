@@ -18,7 +18,6 @@ func _init() -> void:
 	parameter_rid = rd.storage_buffer_create(parameter_data.size(), parameter_data)
 
 
-
 func get_empty_data() -> PackedByteArray:
 	# size + reserved: 4 floats
 	# inv view matrix: 16 floats
@@ -102,16 +101,16 @@ func _render_callback(p_effect_callback_type: EffectCallbackType, p_render_data:
 			RenderingDevice.UNIFORM_TYPE_STORAGE_BUFFER,
 			0,
 		)
-		# Colour Image
-		var uniform_colour := get_uniform(
-			[colour_buffer],
-			RenderingDevice.UNIFORM_TYPE_IMAGE,
+		# Input the Colour Buffer
+		var uniform_input := get_uniform(
+			[sampler_rid, colour_buffer],
+			RenderingDevice.UNIFORM_TYPE_SAMPLER_WITH_TEXTURE,
 			1,
 		)
-		# Screen Buffer
-		var uniform_screen := get_uniform(
-			[sampler_rid, screen_texture],
-			RenderingDevice.UNIFORM_TYPE_SAMPLER_WITH_TEXTURE,
+		# Output the Screen Texture
+		var uniform_output := get_uniform(
+			[screen_texture],
+			RenderingDevice.UNIFORM_TYPE_IMAGE,
 			2,
 		)
 		# Depth Buffer
@@ -128,7 +127,7 @@ func _render_callback(p_effect_callback_type: EffectCallbackType, p_render_data:
 		)
 		var uniform_set := UniformSetCacheRD.get_cache(
 			shader, 0, 
-			[storage_buffer, uniform_colour, uniform_screen, uniform_depth, uniform_normal]
+			[storage_buffer, uniform_input, uniform_output, uniform_depth, uniform_normal]
 		)
 
 		# Run the compute shader
